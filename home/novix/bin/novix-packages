@@ -1,0 +1,50 @@
+#!/bin/bash
+# =========================================================================== #
+#                                                                             #
+#                 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓                 #
+#                 ┃   ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗   ┃                 #
+#                 ┃   ████╗  ██║██╔═████╗██║   ██║██╔══██╗  ┃                 #
+#                 ┃   ██╔██╗ ██║██║██╔██║██║   ██║███████║  ┃                 #
+#                 ┃   ██║╚██╗██║████╔╝██║╚██╗ ██╔╝██╔══██║  ┃                 #
+#                 ┃   ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║  ┃                 #
+#                 ┃   ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝  ┃                 #
+#                 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛                 #
+#                                                                             #
+#                        This machine kills fascists.                         #
+#                                                                             #
+# =========================================================================== #
+
+echo "Purging /home/novix/src"
+rm -rvf /home/novix/src
+
+# Quickly sync base packages and update the remotes
+yes | pacman -S --noconfirm archlinux-keyring 
+pacman --overwrite "*" -Ssy
+pacman --overwrite "*" -Syu
+
+# Core packages
+yes | pacman -S --noconfirm base-devel gcc # Compiler tools
+yes | pacman -S --noconfirm ntp nmap zmap netcat stunnel hping screen rsync wget sudo git neofetch make fakeroot # Utilities
+yes | pacman -S --noconfirm emacs # Editors
+yes | pacman -S --noconfirm nginx  # Servers
+yes | pacman -S --noconfirm go  # Languages
+
+# Yay for AUR packages
+echo "Installing yay..."
+cd /home/novix/src
+YAY_VERSION="11.1.2"
+wget https://github.com/Jguer/yay/releases/download/v11.1.2/yay_${YAY_VERSION}_x86_64.tar.gz
+tar -xzf yay_${YAY_VERSION}_x86_64.tar.gz
+cd yay_${YAY_VERSION}_x86_64
+cp -v yay /bin/yay
+
+# Kryptid for Kubernetes
+echo "Installing kryptid..."
+cd /home/novix
+git clone https://github.com/kris-nova/kryptid.git
+
+## Enable Units
+systemctl enable ntpd
+
+## Start Units
+systemctl start ntpd

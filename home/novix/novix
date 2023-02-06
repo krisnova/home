@@ -1,0 +1,37 @@
+#!/bin/bash
+# =========================================================================== #
+#            MIT License Copyright (c) 2022 Kris Nóva <kris@nivenly.com>      #
+#                                                                             #
+#                 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓                 #
+#                 ┃   ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗   ┃                 #
+#                 ┃   ████╗  ██║██╔═████╗██║   ██║██╔══██╗  ┃                 #
+#                 ┃   ██╔██╗ ██║██║██╔██║██║   ██║███████║  ┃                 #
+#                 ┃   ██║╚██╗██║████╔╝██║╚██╗ ██╔╝██╔══██║  ┃                 #
+#                 ┃   ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║  ┃                 #
+#                 ┃   ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝  ┃                 #
+#                 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛                 #
+#                                                                             #
+#                        This machine kills fascists.                         #
+#                                                                             #
+# =========================================================================== #
+
+# User
+useradd \
+  --groups wheel \
+  --system \
+  --shell /bin/bash \
+  --home-dir /home/novix \
+  novix
+
+# Hostname
+hostname $(cat /etc/hostname)
+hostnamectl hostname $(cat /etc/hostname)
+
+# Permissions
+# Do NOT use ${HOME} here as this runs as root and will break SSH!
+chown -R novix:novix /home/novix
+chmod 700 /home/novix/.ssh
+chmod 600 /home/novix/.ssh/*
+
+# Packages
+/home/novix/bin/novix-packages

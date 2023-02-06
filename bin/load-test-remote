@@ -1,0 +1,40 @@
+#!/bin/bash
+# =========================================================================== #
+#                                                                             #
+#                 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓                 #
+#                 ┃   ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗   ┃                 #
+#                 ┃   ████╗  ██║██╔═████╗██║   ██║██╔══██╗  ┃                 #
+#                 ┃   ██╔██╗ ██║██║██╔██║██║   ██║███████║  ┃                 #
+#                 ┃   ██║╚██╗██║████╔╝██║╚██╗ ██╔╝██╔══██║  ┃                 #
+#                 ┃   ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║  ┃                 #
+#                 ┃   ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝  ┃                 #
+#                 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛                 #
+#                                                                             #
+#                        This machine kills fascists.                         #
+#                                                                             #
+# =========================================================================== #
+. $NOVA_WORKSPACE/lib/_common
+
+echo "Begin load-test..."
+date=$(date +"%Y-%m-%d_%H%M%S")
+log=$NOVA_WORKSPACE/out/$date-load-test.log
+echo "Begin load-test..." > $log
+echo "Writing stdout and stderr to $log"
+
+
+function single_host() {
+  HOST=$1
+  ID=$(uuidgen)
+  echo "Spawning work -> $HOST [$ID]"
+  ssh $HOST echo 'Connected!' # Test the connection
+  scp $NOVA_WORKSPACE/lib/run-on-host-load-test $HOST:/tmp/$ID >> $log 2>&1
+  ssh $HOST /tmp/$ID >> $log 2>&1
+  ssh $HOST rm -rf /tmp/$ID >> $log 2>&1
+}
+
+while read HOST; do
+  single_host $HOST &
+done <$NOVA_WORKSPACE/remotes
+
+
+echo "Spawned background jobs against each host in hosts file."

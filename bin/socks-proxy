@@ -1,0 +1,32 @@
+#!/bin/bash
+# =========================================================================== #
+#                                                                             #
+#                 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓                 #
+#                 ┃   ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗   ┃                 #
+#                 ┃   ████╗  ██║██╔═████╗██║   ██║██╔══██╗  ┃                 #
+#                 ┃   ██╔██╗ ██║██║██╔██║██║   ██║███████║  ┃                 #
+#                 ┃   ██║╚██╗██║████╔╝██║╚██╗ ██╔╝██╔══██║  ┃                 #
+#                 ┃   ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║  ┃                 #
+#                 ┃   ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝  ┃                 #
+#                 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛                 #
+#                                                                             #
+#                        This machine kills fascists.                         #
+#                                                                             #
+# =========================================================================== #
+#
+# Used to start a quick SOCKS proxy against a remote.
+#
+# Most Linux distributions will allow you to point your network configuration
+# through a socks proxy such that all your browser traffic will be proxied
+# through this local tunnel.
+
+if [ -z "$1" ]; then
+    echo "Usage: socks.client.proxy <USER@HOST>"
+    exit 1
+fi
+
+TARGET=$1
+echo "Proxy ${TARGET}..."
+echo "Listen Access:   localhost:3000"
+ssh -D 3000 -q -C -N ${TARGET}
+

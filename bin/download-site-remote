@@ -1,0 +1,53 @@
+#!/bin/bash
+# =========================================================================== #
+#                                                                             #
+#                 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓                 #
+#                 ┃   ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗   ┃                 #
+#                 ┃   ████╗  ██║██╔═████╗██║   ██║██╔══██╗  ┃                 #
+#                 ┃   ██╔██╗ ██║██║██╔██║██║   ██║███████║  ┃                 #
+#                 ┃   ██║╚██╗██║████╔╝██║╚██╗ ██╔╝██╔══██║  ┃                 #
+#                 ┃   ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║  ┃                 #
+#                 ┃   ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝  ┃                 #
+#                 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛                 #
+#                                                                             #
+#                        This machine kills fascists.                         #
+#                                                                             #
+# =========================================================================== #
+. $NOVA_WORKSPACE/lib/_common
+#
+# This is used to "scrape" or "extract" an entire website's contents at a
+# given point in time.
+#
+# Use it to "download" a website quickly.
+#
+
+if [ -z "$1" ]; then
+    echo "Usage: download-site-remote <REMOTE>"
+    exit 1
+fi
+
+TARGET=$1
+DIR=$NOVA_WORKSPACE/out/${TARGET}.d/
+
+echo "Scraping, downloading all files, and extracting: ${TARGET}..."
+mkdir ${DIR}
+cd ${DIR}
+
+# wget the entire target
+wget \
+     --recursive \
+     --no-clobber \
+     --page-requisites \
+     --html-extension \
+     --convert-links \
+     --restrict-file-names=windows \
+     --domains website.org \
+     --no-parent \
+     ${TARGET}
+
+# and the images...
+wget -U "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0" -nd -r --level=1  -e robots=off -A jpg,jpeg,bmp,gif,png -H ${TARGET}
+
+# Finish up
+cd -
+echo "Wrote to: $DIR"

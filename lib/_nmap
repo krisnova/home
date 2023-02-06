@@ -1,0 +1,74 @@
+#!/bin/bash
+# =========================================================================== #
+#                                                                             #
+#                 +-----------------------------------------+                 #
+#                 |   ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗   |                 #
+#                 |   ████╗  ██║██╔═████╗██║   ██║██╔══██╗  |                 #
+#                 |   ██╔██╗ ██║██║██╔██║██║   ██║███████║  |                 #
+#                 |   ██║╚██╗██║████╔╝██║╚██╗ ██╔╝██╔══██║  |                 #
+#                 |   ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║  |                 #
+#                 |   ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝  |                 #
+#                 +-----------------------------------------+                 #
+#                                                                             #
+#                        This machine kills fascists.                         #
+#                                                                             #
+# =========================================================================== #
+. $NOVA_WORKSPACE/lib/_common
+#
+# network-scan-ipv4-remote is a collection of useful nmap commands.
+#
+# Use it just like you would use nmap, however it will run a handful of my
+# favorite scans against a target.
+#
+# Useful to grab a quick fingerprint of a remote target for any lawful open
+# source intelligence purposes.
+#
+# Requires "vulscan" to scan for vulnerabilities
+#
+# pacaur -S vulscan-git
+#
+# -O    Enables OS detectionA
+# -sV   Enables version detection
+# -sS   TCP SYN/Connect()/ACK/Window/Maimon scans
+# --script=vulscan Enables vulscan script
+
+DATE=$(date '+%Y-%m-%d')
+
+# Set nmap common to default value 'nmap', note: this can be overloaded to add
+# common flags passed to all the commands below.
+#
+# For example to run the commands as IPv6 you just:
+#
+#     NMAP_COMMON="nmap -6" ./_nmap
+NMAP_COMMON="${NMAP_COMMON:-nmap}"
+
+TARGET=$@ # Pass all arguments for good measure
+REMOTE=$1 # Remote is the target hostname
+echo ""
+echo "Running: $NMAP_COMMON"
+echo ""
+
+# Operating System Scan
+echo "-> Nmap: Starting Operating System Scan..."
+sudo -E $NMAP_COMMON -O $TARGET > $NOVA_WORKSPACE/out/$REMOTE-$DATE.nmap.osscan 2>&1 &
+
+# Basic Port Scan
+echo "-> Nmap: Starting Basic Port Scan..."
+sudo -E $NMAP_COMMON $TARGET > $NOVA_WORKSPACE/out/$REMOTE-$DATE.nmap.ports 2>&1 &
+
+# Basic HTTP Scan
+echo "-> Nmap: Starting Basic HTTP Scan..."
+sudo -E $NMAP_COMMON --script=http-headers $TARGET > $NOVA_WORKSPACE/out/$REMOTE-$DATE.nmap.http 2>&1 &
+
+# Common Scripts
+echo "-> Nmap: Starting Common Scan..."
+sudo -E $NMAP_COMMON -sC $TARGET > $NOVA_WORKSPACE/out/$REMOTE-$DATE.nmap.common 2>&1 &
+
+# Vulnerability (CVE) Scan
+echo "-> Nmap: Starting CVE Scan..."
+sudo -E $NMAP_COMMON -sV -sS --script=vulscan/vulscan.nse $TARGET > $NOVA_WORKSPACE/out/$REMOTE-$DATE.nmap.cve 2>&1 &
+
+echo ""
+echo "Scripts will finish in the background."
+echo "See $NOVA_WORKSPACE/out/*nmap* files for results"
+echo ""

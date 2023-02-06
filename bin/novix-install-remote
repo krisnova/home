@@ -1,0 +1,41 @@
+#!/bin/bash
+# =========================================================================== #
+#                                                                             #
+#                 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓                 #
+#                 ┃   ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗   ┃                 #
+#                 ┃   ████╗  ██║██╔═████╗██║   ██║██╔══██╗  ┃                 #
+#                 ┃   ██╔██╗ ██║██║██╔██║██║   ██║███████║  ┃                 #
+#                 ┃   ██║╚██╗██║████╔╝██║╚██╗ ██╔╝██╔══██║  ┃                 #
+#                 ┃   ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║  ┃                 #
+#                 ┃   ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝  ┃                 #
+#                 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛                 #
+#                                                                             #
+#                        This machine kills fascists.                         #
+#                                                                             #
+# =========================================================================== #
+. $NOVA_WORKSPACE/lib/_common
+
+if [ -z "$1" ] || [ -z "$2" ]; then
+    echo "Usage: novix-install-remote <REMOTE> <HOSTNAME>"
+    echo ""
+    echo "   Example: novix-install-remote 10.0.0.100 alice"
+    echo ""
+    echo "   Note: This will always provision as the root user!"
+    echo ""
+    exit 1
+fi
+
+REMOTE=$1
+HOSTNAME=$2
+USER=root
+
+# Configure the hostname for the remote "etc" directory
+echo $HOSTNAME > $NOVA_WORKSPACE/etc/hostname
+
+# Send the configuration to the remote
+$NOVA_WORKSPACE/bin/novix-configure-remote $REMOTE
+
+# Launch the novix installer on the remote
+echo "Begin ssh/scp install -> [$USER@$remote]..."
+ssh $USER@$REMOTE "touch /var/log/novix.log && /home/novix/novix 2> /var/log/novix.log &"
+

@@ -17,8 +17,8 @@
 default: help
 
 install: ## Install workspace
-	@echo "Cleaning..."
-	rm -rvf out/*
+	@echo "Installing..."
+	. lib/_install
 
 clean: ## Clean your artifacts 🧼
 	@echo "Cleaning..."

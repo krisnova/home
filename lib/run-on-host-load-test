@@ -1,0 +1,33 @@
+#!/bin/bash
+# =========================================================================== #
+#                                                                             #
+#                 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓                 #
+#                 ┃   ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗   ┃                 #
+#                 ┃   ████╗  ██║██╔═████╗██║   ██║██╔══██╗  ┃                 #
+#                 ┃   ██╔██╗ ██║██║██╔██║██║   ██║███████║  ┃                 #
+#                 ┃   ██║╚██╗██║████╔╝██║╚██╗ ██╔╝██╔══██║  ┃                 #
+#                 ┃   ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║  ┃                 #
+#                 ┃   ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝  ┃                 #
+#                 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛                 #
+#                                                                             #
+#                        This machine kills fascists.                         #
+#                                                                             #
+# =========================================================================== #
+#
+# This script will be ran on every host configured in $NOVA_WORKSPACE/remotes
+#
+# Any commands in this file will be executed almost at exactly the same time.
+# The only limitation in execution drift is network connectivity and a single
+# compute cycle on the local machine.
+
+echo "Running on [$HOSTNAME] $(date)"
+for i in {1..100}
+do
+ echo "Running $i/100 units of work."
+ curl -X POST --silent https://hachyderm.io &
+ curl --silent https://hachyderm.io &
+ curl --silent https://hachyderm.io/explore &
+ curl --silent https://hachyderm.io/home &
+done
+
+
