@@ -43,7 +43,13 @@ Set a default value of a variable such that it can be overridden at launch of sc
 VAR="${VAR:-'default-value-here'}" # Set $VAR to default value if $VAR is empty/unset
 ```
 
+For loop over strings. 
 
+```bash 
+for str in a b c d e f; do
+  # do something with $str
+done 
+```
 
 
 

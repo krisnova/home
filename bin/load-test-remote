@@ -25,13 +25,21 @@ echo "Writing stdout and stderr to $log"
 function single_host() {
   HOST=$1
   ID=$(uuidgen)
-  echo "Spawning work -> $HOST [$ID]"
-  ssh $HOST echo 'Connected!' # Test the connection
+  echo " -> Spawning work $HOST [$ID]"
   scp $NOVA_WORKSPACE/lib/run-on-host-load-test $HOST:/tmp/$ID >> $log 2>&1
   ssh $HOST /tmp/$ID >> $log 2>&1
   ssh $HOST rm -rf /tmp/$ID >> $log 2>&1
 }
 
+# Check the hosts
+u=$(cat $NOVA_WORKSPACE/remotes | uniq)
+for HOST in $u; do
+  echo "Checking connection to host: $HOST"
+  ssh $HOST echo '  -> Connected!' || exit 1
+done
+
+
+# Do the work
 while read HOST; do
   single_host $HOST &
 done <$NOVA_WORKSPACE/remotes
