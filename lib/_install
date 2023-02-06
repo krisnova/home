@@ -16,8 +16,19 @@
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 WORKSPACE_DIR=$(dirname $SCRIPT_DIR)
-echo "Setting NOVA_WORKSPACE=$WORKSPACE_DIR in ~/.bashrc"
-echo "export NOVA_WORKSPACE=$WORKSPACE_DIR" >> ~/.bashrc
+
+if [ -z "${NOVA_WORKSPACE}" ]; then
+  echo "Setting NOVA_WORKSPACE=$WORKSPACE_DIR in ~/.bashrc"
+  echo "export NOVA_WORKSPACE=$WORKSPACE_DIR" >> ~/.bashrc
+  echo ""
+  echo "Reminder:"
+  echo "  source ~/.bashrc"
+  echo ""
+fi
 
 # Dependency for network tools
-yes | yay -S --noconfirm nmap instaloader vulscan-git
+yes | yay -S --noconfirm nmap instaloader vulscan-git ssh sudo
+
+echo ""
+echo "Workspace is configured and dependencies are installed!"
+echo ""
