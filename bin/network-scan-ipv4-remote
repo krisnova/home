@@ -14,10 +14,25 @@
 #                                                                             #
 # =========================================================================== #
 . $NOVA_WORKSPACE/lib/_common
+function help() {
+    echo ""
+    echo "===================================================================="
+    echo " Used for IPv4 network scanning a remote with pre-defined scans."
+    echo ""
+    echo " [Usage]:  network-scan-ipv4-remote <remote>"
+    echo ""
+    echo "      Ex:  network-scan-ipv4-remote nivenly.com"
+    echo "      Ex:  network-scan-ipv4-remote 10.0.0.1/24"
+    echo ""
+    echo "===================================================================="
+    echo ""
+    exit
+}
 
-if [ -z "$1" ]; then
-    echo "Usage: network-scan-remote <REMOTE>"
-    exit 1
-fi
+# Usage and help
+if [ -z "$1" ]; then help; fi
+if [ "$1" = "help" ]; then help; fi
+if [ "$1" = "--help" ]; then help; fi
+if [ "$1" = "-h" ]; then help; fi
 
 NMAP_COMMON="nmap" $NOVA_WORKSPACE/lib/_nmap $@

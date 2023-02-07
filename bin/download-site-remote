@@ -14,26 +14,36 @@
 #                                                                             #
 # =========================================================================== #
 . $NOVA_WORKSPACE/lib/_common
-#
-# This is used to "scrape" or "extract" an entire website's contents at a
-# given point in time.
-#
-# Use it to "download" a website quickly.
-#
+function help() {
+    echo ""
+    echo "===================================================================="
+    echo " Used for downloading or 'extracting' a given remote host."
+    echo ""
+    echo " [Usage]:  download-site-remote <remote>"
+    echo ""
+    echo "      Ex:  download-site-remote nivenly.com"
+    echo "      Ex:  download-site-remote https://10.0.0.1"
+    echo ""
+    echo "===================================================================="
+    echo ""
+    exit
+}
 
-if [ -z "$1" ]; then
-    echo "Usage: download-site-remote <REMOTE>"
-    exit 1
-fi
+# Usage and help
+if [ -z "$1" ]; then help; fi
+if [ "$1" = "help" ]; then help; fi
+if [ "$1" = "--help" ]; then help; fi
+if [ "$1" = "-h" ]; then help; fi
 
-TARGET=$1
-DIR=$NOVA_WORKSPACE/out/${TARGET}.d/
+# Set variables
+REMOTE=$1
+DIR=$NOVA_WORKSPACE/out/${REMOTE}.download/
 
-echo "Scraping, downloading all files, and extracting: ${TARGET}..."
+echo "Scraping, downloading all files, and extracting: ${REMOTE}..."
 mkdir ${DIR}
 cd ${DIR}
 
-# wget the entire target
+# wget the entire REMOTE
 wget \
      --recursive \
      --no-clobber \
@@ -43,10 +53,10 @@ wget \
      --restrict-file-names=windows \
      --domains website.org \
      --no-parent \
-     ${TARGET}
+     ${REMOTE}
 
 # and the images...
-wget -U "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0" -nd -r --level=1  -e robots=off -A jpg,jpeg,bmp,gif,png -H ${TARGET}
+wget -U "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0" -nd -r --level=1  -e robots=off -A jpg,jpeg,bmp,gif,png -H ${REMOTE}
 
 # Finish up
 cd -

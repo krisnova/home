@@ -49,23 +49,23 @@ echo "Running: $NMAP_COMMON"
 echo ""
 
 # Operating System Scan
-echo "-> Nmap: Starting Operating System Scan..."
+echo "  -> Nmap: Starting Operating System Scan..."
 sudo -E $NMAP_COMMON -O $TARGET > $NOVA_WORKSPACE/out/$REMOTE-$DATE.nmap.osscan 2>&1 &
 
 # Basic Port Scan
-echo "-> Nmap: Starting Basic Port Scan..."
+echo "  -> Nmap: Starting Basic Port Scan..."
 sudo -E $NMAP_COMMON $TARGET > $NOVA_WORKSPACE/out/$REMOTE-$DATE.nmap.ports 2>&1 &
 
 # Basic HTTP Scan
-echo "-> Nmap: Starting Basic HTTP Scan..."
+echo "  -> Nmap: Starting Basic HTTP Scan..."
 sudo -E $NMAP_COMMON --script=http-headers $TARGET > $NOVA_WORKSPACE/out/$REMOTE-$DATE.nmap.http 2>&1 &
 
 # Common Scripts
-echo "-> Nmap: Starting Common Scan..."
+echo "  -> Nmap: Starting Common Scan..."
 sudo -E $NMAP_COMMON -sC $TARGET > $NOVA_WORKSPACE/out/$REMOTE-$DATE.nmap.common 2>&1 &
 
 # Vulnerability (CVE) Scan
-echo "-> Nmap: Starting CVE Scan..."
+echo "  -> Nmap: Starting CVE Scan..."
 sudo -E $NMAP_COMMON -sV -sS --script=vulscan/vulscan.nse $TARGET > $NOVA_WORKSPACE/out/$REMOTE-$DATE.nmap.cve 2>&1 &
 
 echo ""

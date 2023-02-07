@@ -41,7 +41,12 @@ cp -v yay /bin/yay
 # Kryptid for Kubernetes
 echo "Installing kryptid..."
 cd /home/novix
-git clone https://github.com/kris-nova/kryptid.git
+git clone https://github.com/kris-nova/kryptid.git &
+
+# Workspace (this repo)
+echo "Installing workspace..."
+cd /home/novix
+git clone https://github.com/kris-nova/workspace.git &
 
 ## Enable Units
 systemctl enable ntpd

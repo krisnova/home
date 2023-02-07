@@ -21,8 +21,7 @@
 # compute cycle on the local machine.
 
 echo "Running on [$HOSTNAME] $(date)"
-for i in {1..100}
-do
+for i in {1..100}; do
  echo "Running $i/100 units of work."
  curl -X POST --silent https://hachyderm.io &
  curl --silent https://hachyderm.io &
