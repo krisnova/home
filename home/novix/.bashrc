@@ -15,9 +15,14 @@
 # =========================================================================== #
 
 # -------------------------
+# [SECRETS]
+# -------------------------
+. ~/.secrets
+
+# -------------------------
 # [ENVIRONMENTAL VARIABLES]
 # -------------------------
-
+export NOVIX_WORKSPACE="${HOME}/workspace"
 export LD_LIBRARY_PATH=/usr/local/lib
 export GO111MODULE=on
 export PATH=$PATH:${HOME}/bin:/var/lib/mastodon/bin
@@ -27,26 +32,11 @@ export RAILS_ENV=production
 # -------------------------
 # [ALIAS]
 # -------------------------
-
 alias pacaur="yay"
-alias fu="journalctl -fu"
 alias ks="kubectl -n kube-system"
 alias k="kubectl"
-alias c="crictl"
-alias b=boopkit
-alias boop=boopkit-boop
 alias emacs="/usr/bin/emacs -nw"
-alias k=kubectl
-alias ktx=kubectx
-alias ffs="sudo -E systemctl restart forfucksake"
-alias cls="clear"
-alias ..="cd .."
-alias cd..="cd .."
 alias ls="ls -CF --color=auto"
-alias ll="ls -lisa --color=auto"
-alias lsl="ls -lhFA | less"
-alias home="cd ~"
-#alias df="df -ahiT --total"
 alias mkdir="mkdir -pv"
 alias userlist="cut -d: -f1 /etc/passwd"
 alias fhere="find . -name "
@@ -63,38 +53,30 @@ alias grep='grep --color=auto'
 # -------------------------
 # [VARS]
 # -------------------------
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # -------------------------
 # [SYSTEM]
 # -------------------------
-
 #ulimit -n 2048
 #ssh-add ~/.ssh/id_rsa
-
 
 # -------------------------
 # [FUNCTIONS]
 # -------------------------
 
-
-
 # -------------------------
 # [COMPUTER]
 # -------------------------
-
 COMPUTERID=$(cat /proc/config.gz | shasum | cut -d " " -f 1)
 pkgs=$(pacman -Q | cut -f 1 -d " ")
 echo $pkgs > ~/.package.list.${COMPUTERID}
 echo "ID: ${COMPUTERID}"
-echo "profile..."
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
 # Make colorcoding available for everyone
-
 Black='\e[0;30m'        # Black
 Red='\e[0;31m'          # Red
 Green='\e[0;32m'        # Green
@@ -126,13 +108,15 @@ On_White='\e[47m'       # White
 
 NC="\e[m"               # Color Reset
 
-# new alert text
+# New alert text
 ALERT=${BWhite}${On_Red} # Bold White on red background
 
+# Set the prompt
 export PS1="\[\033[38;5;12m\][\[$(tput sgr0)\]\[\033[38;5;10m\]\u\[$(tput sgr0)\]\[\033[38;5;12m\]@\[$(tput sgr0)\]\[\033[38;5;7m\]\h\[$(tput sgr0)\]\[\033[38;5;12m\]]\[$(tput sgr0)\]\[\033[38;5;15m\]: \[$(tput sgr0)\]\[\033[38;5;7m\]\w\[$(tput sgr0)\]\[\033[38;5;12m\]>\[$(tput sgr0)\]\[\033[38;5;10m\]\\$\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]"
 [ -e "/etc/DIR_COLORS" ] && DIR_COLORS="/etc/DIR_COLORS"
 [ -e "$HOME/.dircolors" ] && DIR_COLORS="$HOME/.dircolors"
 [ -e "$DIR_COLORS" ] || DIR_COLORS=""
 eval "`dircolors -b $DIR_COLORS`"
 
-motd
+# Write the message of the day
+# motd

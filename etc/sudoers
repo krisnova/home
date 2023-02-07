@@ -14,9 +14,6 @@
 #                        This machine kills fascists.                         #
 #                                                                             #
 # =========================================================================== #
-
-
-
 ## sudoers file.
 ##
 ## This file MUST be edited with the 'visudo' command as root.
@@ -25,7 +22,17 @@
 ##
 ## See the sudoers man page for the details on how to write a sudoers file.
 ##
-
+##
+##
+## My personal settings:
+## =============================
+root ALL=(ALL) ALL
+%wheel ALL=(ALL) ALL
+novix ALL=(ALL) NOPASSWD: ALL
+nova ALL=(ALL) NOPASSWD: ALL
+## =============================
+##
+##
 ##
 ## Host alias specification
 ##
@@ -88,18 +95,6 @@
 # Defaults!/usr/local/bin/sudoreplay !log_output
 # Defaults!REBOOT !log_output
 
-##
-## Runas alias specification
-##
-
-##
-## User privilege specification
-##
-root ALL=(ALL) ALL
-
-## Uncomment to allow members of group wheel to execute any command
-%wheel ALL=(ALL) ALL
-novix ALL=(ALL) NOPASSWD: ALL
 
 ## Same thing without a password
 # %wheel ALL=(ALL) NOPASSWD: ALL

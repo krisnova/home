@@ -17,9 +17,9 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 WORKSPACE_DIR=$(dirname $SCRIPT_DIR)
 
-if [ -z "${NOVA_WORKSPACE}" ]; then
-  echo "Setting NOVA_WORKSPACE=$WORKSPACE_DIR in ~/.bashrc"
-  echo "export NOVA_WORKSPACE=$WORKSPACE_DIR" >> ~/.bashrc
+if [ -z "${NOVIX_WORKSPACE}" ]; then
+  echo "Setting NOVIX_WORKSPACE=$WORKSPACE_DIR in ~/.bashrc"
+  echo "export NOVIX_WORKSPACE=$WORKSPACE_DIR" >> ~/.bashrc
   echo ""
   echo "Reminder:"
   echo "  source ~/.bashrc"

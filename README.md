@@ -4,7 +4,7 @@ An Arch Linux based workspace for penetration testing, load testing, OSINT, netw
 
 ### Setting Up
 
-Checkout the repository and set the `NOVA_WORKSPACE` environment variable.
+Checkout the repository and set the `NOVIX_WORKSPACE` environment variable.
 
 Run the `Makefile` for help installing the defaults.
 
@@ -17,7 +17,7 @@ The `novix` provision scripts are my way of quickly bootstrapping a fresh Arch L
 If you intend to make changes to the base install please see the following script:
 
 ``` 
-$NOVA_WORKSPACE/home/novix/bin/novix-packages
+$NOVIX_WORKSPACE/home/novix/bin/novix-packages
 ```
 
 ### Bash Snippets

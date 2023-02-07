@@ -13,31 +13,16 @@
 #                        This machine kills fascists.                         #
 #                                                                             #
 # =========================================================================== #
-. $NOVIX_WORKSPACE/lib/_common && set -e
+. $NOVIX_WORKSPACE/lib/_common
 function help() {
     echo ""
     echo "===================================================================="
+    echo " Used for installing the 'novix' config to this local host."
     echo ""
-    echo "WARNING: This is for research and legal testing only!"
+    echo " WARNING: This will write over all local config!"
+    echo " WARNING: This will reset all local changes to your .bashrc"
     echo ""
-    echo "Used for executing commands on a set of remote hosts."
-    echo "These commands can be used to perform load tests against"
-    echo " a target. See the lib/run-on-host-load-test file to edit"
-    echo " the exact commands which will be executed on the remotes."
-    echo ""
-    echo "The remotes defined in the top level 'remotes' file will be"
-    echo " accessed via SSH, and the load test script will be injected."
-    echo ""
-    echo "The remotes will execute the load test script as closely"
-    echo " together as we can make it. There will be slight limitations"
-    echo " due to network and starting the jobs in serial."
-    echo ""
-    echo " 1. Edit the top level 'remotes' file with [user@host] per line"
-    echo " 2. Edit the lib/run-host-load-test file to define your commands"
-    echo " 3. Run the bin/load-test-remote with '--now' to start the work"
-    echo " 4. See the logs in out/*.log"
-    echo ""
-    echo " [Usage]:  load-test-remote --now"
+    echo " [Usage]:  novix-install-local <hostname>"
     echo ""
     echo "===================================================================="
     echo ""
@@ -49,33 +34,20 @@ if [ -z "$1" ]; then help; fi
 if [ "$1" = "help" ]; then help; fi
 if [ "$1" = "--help" ]; then help; fi
 if [ "$1" = "-h" ]; then help; fi
-if [ "$1" != "--now" ]; then help; fi
+if [ "$UID" != "0" ]; then echo '**Must be ran as root user with privileges!**'; exit; fi
 
-echo "Initializing load test..."
-date=$(date +"%Y-%m-%d_%H%M%S")
-log=$NOVIX_WORKSPACE/out/$date-load-test.log
-echo "Initializing load-test..." > $log
-echo "Writing stdout and stderr to $log"
+HOSTNAME=$1
 
-function single_host() {
-  HOST=$1
-  ID=$(uuidgen)
-  scp $NOVIX_WORKSPACE/lib/run-on-host-load-test $HOST:/tmp/$ID >> $log 2>&1
-  ssh $HOST /tmp/$ID >> $log 2>&1
-  ssh $HOST rm -rf /tmp/$ID >> $log 2>&1
-}
+# Configure the hostname for the remote "etc" directory
+echo $HOSTNAME > $NOVIX_WORKSPACE/etc/hostname
 
-# Check the hosts
-u=$(cat $NOVIX_WORKSPACE/remotes | uniq)
-for HOST in $u; do
-  echo "  -> Checking connection to host: $HOST"
-  ssh $HOST echo '  -> Connected!' || exit 1
-done
+# Send the configuration to the remote
+$NOVIX_WORKSPACE/bin/novix-configure-local
 
-# Do the work
-while read HOST; do
-  echo "  -> Spawning work $HOST"
-  single_host $HOST &
-done <$NOVIX_WORKSPACE/remotes
+echo "Begin local install"
+hostname $(cat /etc/hostname)
+hostnamectl hostname $(cat /etc/hostname)
 
-echo "Spawned background jobs against each host in hosts file!"
+# Note: Here we install as the local user, so we do NOT run the "novix" script
+# Note: We only install the "novix-packages" script
+#/home/novix/bin/novix-packages

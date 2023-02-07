@@ -13,7 +13,7 @@
 #                        This machine kills fascists.                         #
 #                                                                             #
 # =========================================================================== #
-. $NOVA_WORKSPACE/lib/_common
+. $NOVIX_WORKSPACE/lib/_common
 function help() {
     echo ""
     echo "===================================================================="
@@ -35,4 +35,4 @@ if [ "$1" = "help" ]; then help; fi
 if [ "$1" = "--help" ]; then help; fi
 if [ "$1" = "-h" ]; then help; fi
 
-NMAP_COMMON="nmap" $NOVA_WORKSPACE/lib/_nmap $@
+NMAP_COMMON="nmap" $NOVIX_WORKSPACE/lib/_nmap $@

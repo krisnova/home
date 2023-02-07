@@ -14,19 +14,19 @@
 #                                                                             #
 # =========================================================================== #
 #
-# This script will be ran on every host configured in $NOVA_WORKSPACE/remotes
+# This script will be ran on every host configured in $NOVIX_WORKSPACE/remotes
 #
 # Any commands in this file will be executed almost at exactly the same time.
 # The only limitation in execution drift is network connectivity and a single
 # compute cycle on the local machine.
 
+target="https://hachyderm.io"
+
 echo "Running on [$HOSTNAME] $(date)"
-for i in {1..100}; do
- echo "Running $i/100 units of work."
- curl -X POST --silent https://hachyderm.io &
- curl --silent https://hachyderm.io &
- curl --silent https://hachyderm.io/explore &
- curl --silent https://hachyderm.io/home &
+for i in {1..1000}; do
+ echo "Running $i/1000 units of work -> $target"
+ curl -o /dev/null -X POST --silent --header "User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0" --header "Connection: keep-alive" $target &
+ curl -o /dev/null --silent --header "User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0" --header "Connection: keep-alive" $target &
+ curl -o /dev/null --silent --header "User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0" --header "Connection: keep-alive" $target/explore &
+ curl -o /dev/null --silent --header "User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0" --header "Connection: keep-alive" $target/home &
 done
-
-
