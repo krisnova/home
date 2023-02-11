@@ -4,7 +4,7 @@ An Arch Linux based workspace for penetration testing, load testing, OSINT, netw
 
 ### Setting Up
 
-Checkout the repository and set the `NOVIX_WORKSPACE` environment variable.
+Checkout the repository and set the `NOVIX_WORKSPACE` environment variable which is automatically managed by running `make install`.
 
 Run the `Makefile` for help installing the defaults.
 
