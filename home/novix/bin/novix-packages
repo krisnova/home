@@ -24,7 +24,7 @@ pacman --overwrite "*" -Syu
 
 # Core packages
 yes | pacman -S --noconfirm base-devel gcc # Compiler tools
-yes | pacman -S --noconfirm ntp nmap zmap netcat stunnel hping screen rsync wget sudo git neofetch make fakeroot # Utilities
+yes | pacman -S --noconfirm ntp screen rsync wget sudo git neofetch make fakeroot # Utilities
 yes | pacman -S --noconfirm emacs # Editors
 yes | pacman -S --noconfirm nginx  # Servers
 yes | pacman -S --noconfirm go  # Languages
@@ -37,6 +37,11 @@ wget https://github.com/Jguer/yay/releases/download/v11.1.2/yay_${YAY_VERSION}_x
 tar -xzf yay_${YAY_VERSION}_x86_64.tar.gz
 cd yay_${YAY_VERSION}_x86_64
 cp -v yay /bin/yay
+
+# Hacking Tools
+yes | yay -Sy --noconfirm nmap zmap netcat stunnel hping netdiscover # Network
+yes | yay -Sy --noconfirm hydra # Crackers
+
 
 # Kryptid for Kubernetes
 echo "Installing kryptid..."
