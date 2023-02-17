@@ -13,4 +13,8 @@
 #                        This machine kills fascists.                         #
 #                                                                             #
 # =========================================================================== #
-rm -vrf *~
+
+git status
+git add .
+git commit -s -m "Automatic commit."
+git push origin main

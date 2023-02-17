@@ -19,6 +19,12 @@ If you intend to make changes to the base install please see the following scrip
 ``` 
 $NOVIX_WORKSPACE/home/novix/bin/novix-packages
 ```
+### Well Known Locations
+
+```bash
+# Seclists
+/usr/share/seclists/
+```
 
 ### Bash Snippets
 
