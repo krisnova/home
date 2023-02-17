@@ -54,7 +54,7 @@ sudo -E $NMAP_COMMON -O $TARGET > $NOVIX_WORKSPACE/out/$REMOTE-$DATE.nmap.osscan
 
 # Basic Port Scan
 echo "  -> Nmap: Starting Basic Port Scan..."
-sudo -E $NMAP_COMMON $TARGET > $NOVIX_WORKSPACE/out/$REMOTE-$DATE.nmap.ports 2>&1 &
+sudo -E $NMAP_COMMON -sC -sV $TARGET > $NOVIX_WORKSPACE/out/$REMOTE-$DATE.nmap.ports 2>&1 &
 
 # Basic HTTP Scan
 echo "  -> Nmap: Starting Basic HTTP Scan..."
@@ -67,6 +67,7 @@ sudo -E $NMAP_COMMON -sC $TARGET > $NOVIX_WORKSPACE/out/$REMOTE-$DATE.nmap.commo
 # Vulnerability (CVE) Scan
 echo "  -> Nmap: Starting CVE Scan..."
 sudo -E $NMAP_COMMON -sV -sS --script=vulscan/vulscan.nse $TARGET > $NOVIX_WORKSPACE/out/$REMOTE-$DATE.nmap.cve 2>&1 &
+
 
 echo ""
 echo "Scripts will finish in the background."
