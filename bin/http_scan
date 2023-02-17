@@ -1,0 +1,53 @@
+#!/bin/bash
+# =========================================================================== #
+#                                                                             #
+#                 +-----------------------------------------+                 #
+#                 |   ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗   |                 #
+#                 |   ████╗  ██║██╔═████╗██║   ██║██╔══██╗  |                 #
+#                 |   ██╔██╗ ██║██║██╔██║██║   ██║███████║  |                 #
+#                 |   ██║╚██╗██║████╔╝██║╚██╗ ██╔╝██╔══██║  |                 #
+#                 |   ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║  |                 #
+#                 |   ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝  |                 #
+#                 +-----------------------------------------+                 #
+#                                                                             #
+#                        This machine kills fascists.                         #
+#                                                                             #
+# =========================================================================== #
+. $NOVIX_WORKSPACE/lib/_common
+function help() {
+    echo ""
+    echo "===================================================================="
+    echo " Full scan for an HTTP backend to search for files/dashboards."
+    echo " [gobuster] wrapper. Use gobuster directly for more complex scans."
+    echo ""
+    echo " [Usage]:  http_scan <remote> <passthrough>"
+    echo ""
+    echo "      Ex:  http_scan nivenly.com <gobuster flags>"
+    echo ""
+    echo "===================================================================="
+    echo ""
+    gobuster --help
+    exit
+}
+
+# Usage and help
+if [ -z "$1" ]; then help; fi
+if [ "$1" = "help" ]; then help; fi
+if [ "$1" = "--help" ]; then help; fi
+if [ "$1" = "-h" ]; then help; fi
+REMOTE=$1
+PASSTHROUGH=${@:2}
+
+# Common PHP
+gobuster dir \
+  $PASSTHROUGH \
+  -w /usr/share/seclists/Discovery/Web-Content/common.txt \
+  -u "$REMOTE" \
+  -x php &
+
+# Common ASP
+gobuster dir \
+  $PASSTHROUGH \
+  -w /usr/share/seclists/Discovery/Web-Content/common.txt \
+  -u "$REMOTE" \
+  -x asp &
