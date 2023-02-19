@@ -23,9 +23,6 @@
 # This script assumes it is ran as a privileged (Root) user.
 # This script assumes that you will be logged in as "novix" user.
 
-
-
-## Step 1.
 # Provision "novix" user if not already logged in as novix.
 if [ "$USER" != "novix" ]; then
     echo "Please enter a hostname: [$HOSTNAME]"
@@ -35,6 +32,8 @@ if [ "$USER" != "novix" ]; then
     echo "You MUST log out and log back in as 'novix' user after installation is complete!"
 fi
 
-## Step 2.
-# Provision packages.
+# Provision etc
+cp -rv etc/* /etc
 
+cp -rv * /home/novix
+cp -rv .* /home/novix
