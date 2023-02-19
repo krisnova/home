@@ -13,7 +13,6 @@
 #                        This machine kills fascists.                         #
 #                                                                             #
 # =========================================================================== #
-. $HOME/lib/_common
 #
 # network-scan-ipv4-remote is a collection of useful nmap commands.
 #
@@ -39,7 +38,7 @@ TARGET=$@ # Target is the full nmap target, host, and other flags
 REMOTE=$1 # Remote is the remote host only
 
 # Kill any previous running scans in the background
-sudo -E pkill -f nmap
+sudo -E pkill -f nmapworker
 
 ## Surface glance (ping scan only) to stdout
 # -n  Never do DNS resolution
@@ -56,7 +55,7 @@ echo "---[ Full Scans ]---------------------------------------------------------
 # -sC  Default script
 # -sV  Probe open ports and determine service version
 echo "  -> Nmap: Starting Basic Port Scan..."
-sudo -E $NMAP_COMMON -sC -sV -A $TARGET > $HOME/out/$REMOTE-$DATE.nmap.ports 2>&1 &                                # Quick
+sudo -E LABEL=nmapworker $NMAP_COMMON -sC -sV -A $TARGET > $HOME/out/$REMOTE-$DATE.nmap.ports 2>&1 &                                # Quick
 
 ## [ Full scan ]
 # -O   Operating system
@@ -67,15 +66,15 @@ sudo -E $NMAP_COMMON -sC -sV -A $TARGET > $HOME/out/$REMOTE-$DATE.nmap.ports 2>&
 # -A   Enable OS detection, version detection, script scanning, and traceroute
 #
 # --min-rate  Send packets no slower than <number> per second
-sudo -E $NMAP_COMMON -sC -sV -p- -v -A --min-rate 5000 $TARGET > $HOME/out/$REMOTE-$DATE.nmap.all.ports 2>&1 &  # Slow (all ports)
+sudo -E LABEL=nmapworker $NMAP_COMMON -sC -sV -p- -v -A --min-rate 5000 $TARGET > $HOME/out/$REMOTE-$DATE.nmap.all.ports 2>&1 &  # Slow (all ports)
 
 # Basic HTTP Scan
 echo "  -> Nmap: Starting Basic HTTP Scan..."
-sudo -E $NMAP_COMMON --script=http-headers $TARGET > $HOME/out/$REMOTE-$DATE.nmap.http 2>&1 &
+sudo -E LABEL=nmapworker $NMAP_COMMON --script=http-headers $TARGET > $HOME/out/$REMOTE-$DATE.nmap.http 2>&1 &
 
 # Vulnerability (CVE) Scan
 echo "  -> Nmap: Starting CVE Scan..."
-sudo -E $NMAP_COMMON -sV -sS --script=vulscan/vulscan.nse $TARGET > $HOME/out/$REMOTE-$DATE.nmap.cve 2>&1 &
+sudo -E LABEL=nmapworker $NMAP_COMMON -sV -sS --script=vulscan/vulscan.nse $TARGET > $HOME/out/$REMOTE-$DATE.nmap.cve 2>&1 &
 echo "---[ Full Scans ]--------------------------------------------------------------------"
 
 echo ""
