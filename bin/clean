@@ -25,3 +25,4 @@ mv -v *.jpeg   /tmp 2> /dev/null
 mv -v *.pdf    /tmp 2> /dev/null
 mv -v *.docx   /tmp 2> /dev/null
 mv -v \#*      /tmp 2> /dev/null
+mv -v .*~*     /tmp 2> /dev/null
