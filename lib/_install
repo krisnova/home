@@ -13,21 +13,27 @@
 #                        This machine kills fascists.                         #
 #                                                                             #
 # =========================================================================== #
+#
+# This is the main "Novix" installer script.
+#
+# The goal for this script is to be safe to run at any point in time.
+#
+# This script assumes a modern (Circa 2023) Arch Linux base.
+# This script assumes you intend to download all of the AUR packages.
+# This script assumes it is ran as a privileged (Root) user.
+# This script assumes that you will be logged in as "novix" user.
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-WORKSPACE_DIR=$(dirname $SCRIPT_DIR)
 
-if [ -z "${NOVIX_WORKSPACE}" ]; then
-  echo "Setting NOVIX_WORKSPACE=$WORKSPACE_DIR in ~/.bashrc"
-  echo "export NOVIX_WORKSPACE=$WORKSPACE_DIR" >> ~/.bashrc
-  echo ""
-  echo "Reminder:"
-  echo "  source ~/.bashrc"
-  echo ""
+
+## Step 1.
+# Provision "novix" user if not already logged in as novix.
+if [ "$USER" != "novix" ]; then
+    echo "Please enter a hostname: [$HOSTNAME]"
+    read -r IH
+    if [ "$IH" = "" ]; then IH=$HOSTNAME; fi
+    . lib/_novix "$IH"
+    echo "You MUST log out and log back in as 'novix' user after installation is complete!"
 fi
 
-$NOVIX_WORKSPACE/bin/novix-install-local $(hostname)
-
-echo ""
-echo "Workspace is configured and dependencies are installed!"
-echo ""
+## Step 2.
+# Provision packages.

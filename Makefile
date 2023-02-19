@@ -13,10 +13,9 @@
 #                                                                             #
 # =========================================================================== #
 
-
 default: help
 
-install: ## Install workspace
+install: ## Install "Novix" on the local workstation. 
 	@echo "Installing..."
 	. lib/_install
 

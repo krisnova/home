@@ -1,5 +1,6 @@
 #!/bin/bash
 # =========================================================================== #
+#            MIT License Copyright (c) 2022 Kris Nóva <kris@nivenly.com>      #
 #                                                                             #
 #                 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓                 #
 #                 ┃   ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗   ┃                 #
@@ -13,51 +14,51 @@
 #                        This machine kills fascists.                         #
 #                                                                             #
 # =========================================================================== #
+#
+# This script will provision the "novix" user data.
 
-echo "Purging /home/novix/src"
-rm -rvf /home/novix/src
+function help() {
+    echo ""
+    echo "===================================================================="
+    echo " Used to provision a local machine with the 'novix' user data.      "
+    echo ""
+    echo " [Usage]:  _novix <hostname>"
+    echo ""
+    echo ""
+    echo "===================================================================="
+    echo ""
+    exit
+}
 
-# Quickly sync base packages and update the remotes
-yes | pacman -S --noconfirm archlinux-keyring 
-pacman --overwrite "*" -Ssy
-pacman --overwrite "*" -Syu
+# Usage and help
+if [ -z "$1" ]; then help; fi
+if [ "$1" = "help" ]; then help; fi
+if [ "$1" = "--help" ]; then help; fi
+if [ "$1" = "-h" ]; then help; fi
+if [ "$UID" != "0" ]; then echo '**Must be ran as root user with privileges!**'; exit; fi
+H=$1 # Variable to store "Hostname"
 
-# Core packages
-yes | pacman -S --noconfirm base-devel gcc # Compiler tools
-yes | pacman -S --noconfirm ntp screen rsync wget sudo git neofetch make fakeroot # Utilities
-yes | pacman -S --noconfirm emacs # Editors
-yes | pacman -S --noconfirm nginx  # Servers
-yes | pacman -S --noconfirm go  # Languages
+# User
+echo "  -> Creating User: novix"
+useradd \
+  --groups wheel \
+  --system \
+  --shell /bin/bash \
+  --home-dir /home/novix \
+  novix
 
-# Yay for AUR packages
-echo "Installing yay..."
-cd /home/novix/src
-YAY_VERSION="11.1.2"
-wget https://github.com/Jguer/yay/releases/download/v11.1.2/yay_${YAY_VERSION}_x86_64.tar.gz
-tar -xzf yay_${YAY_VERSION}_x86_64.tar.gz
-cd yay_${YAY_VERSION}_x86_64
-cp -v yay /bin/yay
+# Hostname
+echo "  -> Setting Hostname: $H"
+echo $H > /etc/hostname
+hostname $(cat /etc/hostname)
+hostnamectl hostname $(cat /etc/hostname)
 
-# Hacking Tools
-yes | yay -Sy --noconfirm nmap zmap netcat stunnel hping netdiscover instaloader vulscan-git # Network
-yes | yay -Sy --noconfirm hydra # Crackers
-yes | yay -Sy --noconfirm gobuster # Brute Force
-yes | yay -Sy --noconfirm seclists # Security Lists
-yes | yay -Sy --noconfirm nmap ssh sudo # Keep up to date
-
-
-# Kryptid for Kubernetes
-echo "Installing kryptid..."
-cd /home/novix
-git clone https://github.com/kris-nova/kryptid.git &
-
-# Workspace (this repo)
-echo "Installing workspace..."
-cd /home/novix
-git clone https://github.com/kris-nova/workspace.git &
-
-## Enable Units
-systemctl enable ntpd
-
-## Start Units
-systemctl start ntpd
+# Permissions
+# Do NOT use ${HOME} here as this runs as root and will break SSH!
+echo "  -> Setting /home/novix permissions"
+mkdir -p /home/novix/.ssh
+chown -R novix:novix /home/novix
+chmod 700 /home/novix/.ssh
+echo "  -> 700 /home/novix/.ssh"
+chmod 600 /home/novix/.ssh/*
+echo "  -> 600 /home/novix/.ssh/*"
