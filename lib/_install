@@ -26,8 +26,7 @@ if [ -z "${NOVIX_WORKSPACE}" ]; then
   echo ""
 fi
 
-# Dependency for network tools
-yes | yay -S --noconfirm nmap instaloader vulscan-git ssh sudo
+$NOVIX_WORKSPACE/bin/novix-install-local $(hostname)
 
 echo ""
 echo "Workspace is configured and dependencies are installed!"

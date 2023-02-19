@@ -39,10 +39,12 @@ cd yay_${YAY_VERSION}_x86_64
 cp -v yay /bin/yay
 
 # Hacking Tools
-yes | yay -Sy --noconfirm nmap zmap netcat stunnel hping netdiscover # Network
+yes | yay -Sy --noconfirm nmap zmap netcat stunnel hping netdiscover instaloader vulscan-git # Network
 yes | yay -Sy --noconfirm hydra # Crackers
 yes | yay -Sy --noconfirm gobuster # Brute Force
 yes | yay -Sy --noconfirm seclists # Security Lists
+yes | yay -Sy --noconfirm nmap ssh sudo # Keep up to date
+
 
 # Kryptid for Kubernetes
 echo "Installing kryptid..."

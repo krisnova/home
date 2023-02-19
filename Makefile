@@ -23,6 +23,7 @@ install: ## Install workspace
 clean: ## Clean your artifacts 🧼
 	@echo "Cleaning..."
 	rm -rvf out/*
+	rm -rvf *flag*
 
 .PHONY: help
 help:  ## 🤔 Show help messages for make targets

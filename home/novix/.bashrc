@@ -25,7 +25,7 @@
 export NOVIX_WORKSPACE="${HOME}/workspace"
 export LD_LIBRARY_PATH=/usr/local/lib
 export GO111MODULE=on
-export PATH=$PATH:${HOME}/bin:/var/lib/mastodon/bin
+export PATH=$PATH:${HOME}/bin:${HOME}/workspace/bin
 export EDITOR=/usr/bin/emacs
 export RAILS_ENV=production
 
