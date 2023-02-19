@@ -46,4 +46,4 @@ $NOVIX_WORKSPACE/bin/novix-configure-remote $REMOTE
 
 # Launch the novix installer on the remote
 echo "Begin ssh/scp install -> [$USER@$remote]..."
-ssh $USER@$REMOTE "touch /var/log/novix.log && /home/novix/novix 2> /var/log/novix.log &"
+ssh $USER@$REMOTE "touch /var/log/novix.log && /home/novix/bin/novix 2> /var/log/novix.log &"
