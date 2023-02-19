@@ -1,25 +1,5 @@
 [user]
 	name = Kris Nóva
-	email = kris@nivenly.com
+	email = nova@nivenly.org
 	username = kris-nova
-[safe]
-	directory = /home/nova/nivenly.com
-	directory = /home/nova/cilium
-	directory = /home/nova/cilium
-	directory = /home/nova/hcio
-	directory = /home/nova/kush
-	directory = /home/nova/privilegeescalation.org
-	directory = /home/nova/xpid/aur/xpid
-	directory = /home/nova/karch/containerd
-	directory = /home/nova/karch/containerd
-	directory = /home/nova/karch/cri-tools
-	directory = /home/nova/karch/runc
-	directory = /home/nova/karch/nerdctl
-	directory = /home/nova/karch/helm
-	directory = /home/nova/kryptid/containerd
-	directory = /home/nova/kryptid/helm
-	directory = /home/nova/kryptid/cri-tools
-	directory = /home/nova/kryptid/cri-tools
-	directory = /home/nova/kryptid/nerdctl
-	directory = /home/nova/kryptid/cilium-cli
-	directory = /home/nova/kryptid/cilium-cli
+	
