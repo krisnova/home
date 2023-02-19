@@ -51,7 +51,7 @@ echo ""
 # Basic Port Scan
 echo "  -> Nmap: Starting Basic Port Scan..."
 sudo -E $NMAP_COMMON -sC -sV $TARGET > $NOVIX_WORKSPACE/out/$REMOTE-$DATE.nmap.ports 2>&1 &                          # Quick
-sudo -E $NMAP_COMMON -sC -sV -p- --min-rate 5000 $TARGET > $NOVIX_WORKSPACE/out/$REMOTE-$DATE.nmap.all.ports 2>&1 &  # Slow (all ports)
+sudo -E $NMAP_COMMON -sC -sV -p- -v -A --min-rate 5000 $TARGET > $NOVIX_WORKSPACE/out/$REMOTE-$DATE.nmap.all.ports 2>&1 &  # Slow (all ports)
 
 # Operating System Scan
 echo "  -> Nmap: Starting Operating System Scan..."

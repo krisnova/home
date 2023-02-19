@@ -1,0 +1,54 @@
+#!/bin/bash
+# =========================================================================== #
+#                                                                             #
+#                 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓                 #
+#                 ┃   ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗   ┃                 #
+#                 ┃   ████╗  ██║██╔═████╗██║   ██║██╔══██╗  ┃                 #
+#                 ┃   ██╔██╗ ██║██║██╔██║██║   ██║███████║  ┃                 #
+#                 ┃   ██║╚██╗██║████╔╝██║╚██╗ ██╔╝██╔══██║  ┃                 #
+#                 ┃   ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║  ┃                 #
+#                 ┃   ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝  ┃                 #
+#                 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛                 #
+#                                                                             #
+#                        This machine kills fascists.                         #
+#                                                                             #
+# =========================================================================== #
+. $NOVIX_WORKSPACE/lib/_common
+function help() {
+    echo ""
+    echo "===================================================================="
+    echo " Listen for a reverse shell on a given port.                        "
+    echo ""
+    echo " [Usage]:  reverse-shell <port>                                     "
+    echo ""
+    echo "      Ex:  reverse-shell 9074                                       "
+    echo ""
+    echo "===================================================================="
+    echo ""
+    exit
+}
+
+# Usage and help
+if [ -z "$1" ]; then help; fi
+if [ "$1" = "help" ]; then help; fi
+if [ "$1" = "--help" ]; then help; fi
+if [ "$1" = "-h" ]; then help; fi
+PORT=$1
+DATE=$(date '+%Y-%m-%d')
+
+echo "[OPTION 1]"
+echo "python -c \"import pty; pty.spawn('/bin/bash')\""
+echo ""
+echo "[OPTION 2]"
+echo "python3 -c \"import pty; pty.spawn('/bin/bash')\""
+echo ""
+#python -c 'import pty; pty.spawn("/bin/bash")'
+#^Z bg
+#stty -a
+#echo $TERM
+#stty raw -echo
+#fg
+#export TERM=...
+#stty rows xx columns yy
+
+/usr/bin/ncat -lkvp $PORT

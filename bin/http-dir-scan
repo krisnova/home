@@ -43,11 +43,21 @@ gobuster dir \
   $PASSTHROUGH \
   -w /usr/share/seclists/Discovery/Web-Content/common.txt \
   -u "$REMOTE" \
+  -b 403 404 \
   -x php &
+
+# Common PHP
+gobuster dir \
+  $PASSTHROUGH \
+  -w /usr/share/seclists/Discovery/Web-Content/common.txt \
+  -u "$REMOTE" \
+  -b 403 404 \
+  -x xml &
 
 # Common ASP
 gobuster dir \
   $PASSTHROUGH \
   -w /usr/share/seclists/Discovery/Web-Content/common.txt \
   -u "$REMOTE" \
+  -b 403 404 \
   -x asp &
