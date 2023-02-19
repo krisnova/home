@@ -45,7 +45,7 @@ If you happen to be in a situation where you have a remote Arch linux server onl
 
 ```bash
 # Assuming you are logged in as "novix" locally and have root@ssh access remotely.
-${HOME}/bin/novix-install-remote 10.0.0.230
+${HOME}/bin/novix-remote-from-here root@10.0.0.100
 ```
 
 
