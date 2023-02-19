@@ -1,0 +1,59 @@
+#!/bin/bash
+# =========================================================================== #
+#                                                                             #
+#                 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓                 #
+#                 ┃   ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗   ┃                 #
+#                 ┃   ████╗  ██║██╔═████╗██║   ██║██╔══██╗  ┃                 #
+#                 ┃   ██╔██╗ ██║██║██╔██║██║   ██║███████║  ┃                 #
+#                 ┃   ██║╚██╗██║████╔╝██║╚██╗ ██╔╝██╔══██║  ┃                 #
+#                 ┃   ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║  ┃                 #
+#                 ┃   ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝  ┃                 #
+#                 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛                 #
+#                                                                             #
+#                        This machine kills fascists.                         #
+#                                                                             #
+# =========================================================================== #
+. $NOVIX_WORKSPACE/lib/_common
+function help() {
+    echo ""
+    echo "===================================================================="
+    echo " Used to port forward a remote port to a local port.                "
+    echo " Forward a port on a remote machine to a local port via SSH.        "
+    echo ""
+    echo " [Usage]:  ssh_tunnel <user@host> <remote-port> <local-port>"
+    echo ""
+    echo "      Ex:  ssh_tunnel beeps@boops.com 3306 3333                     "
+    echo ""
+    echo "===================================================================="
+    echo ""
+    exit
+}
+
+# Usage and help
+if [ -z "$1" ]; then help; fi
+if [ -z "$2" ]; then help; fi
+if [ -z "$3" ]; then help; fi
+if [ "$1" = "help" ]; then help; fi
+if [ "$1" = "--help" ]; then help; fi
+if [ "$1" = "-h" ]; then help; fi
+REMOTE=$1
+RPORT=$2
+LPORT=$3
+
+echo ""
+echo "--------------------------"
+echo "  Remote SSH  :  $REMOTE"
+echo "  Local Port  :  $LPORT"
+echo " Remote Port  :  $RPORT"
+echo "--------------------------"
+echo ""
+
+# Local Port Forwarding
+#
+# This technique is referred to as "Local Port Forwarding" (as compared to "Remote Port Forwarding")
+#
+# ssh -L [LOCAL_IP:]LOCAL_PORT:DESTINATION:DESTINATION_PORT [USER@]SSH_SERVER
+#
+# Note the "-N" is required to not run a shell and "hang" on the tunnel
+# 
+ssh -N -L $LPORT:127.0.0.1:$RPORT $REMOTE
