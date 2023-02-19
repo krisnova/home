@@ -1,0 +1,9 @@
+[user]
+	email = nova@nivenly.org
+	name = Kris Nóva
+[core]
+	excludesfile = /home/nova/.gitignore
+[pull]
+	rebase = true
+[init]
+	defaultBranch = main
