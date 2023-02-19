@@ -1,3 +1,4 @@
+
 .idea*
 remotes
 *flag*
@@ -9,7 +10,14 @@ Downloads/*
 Pictures/*
 Videos/*
 Screenshots/*
+Screenshot/*
 
 ## Novix garbage
 src/*
 out/*
+
+# Ignore everything
+*
+
+# Except
+# !etc

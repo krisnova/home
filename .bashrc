@@ -17,14 +17,15 @@
 # -------------------------
 # [SECRETS]
 # -------------------------
-. ~/.secrets/rc
+. ~/.secrets
 
 # -------------------------
 # [ENVIRONMENTAL VARIABLES]
 # -------------------------
+export NOVIX_WORKSPACE="${HOME}/workspace"
 export LD_LIBRARY_PATH=/usr/local/lib
 export GO111MODULE=on
-export PATH=$PATH:${HOME}/bin:${HOME}/workspace/bin
+export PATH=$PATH:${HOME}/bin:/var/lib/mastodon/bin:${HOME}/.cargo/bin
 export EDITOR=/usr/bin/emacs
 export RAILS_ENV=production
 
@@ -69,7 +70,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # -------------------------
 COMPUTERID=$(cat /proc/config.gz | shasum | cut -d " " -f 1)
 pkgs=$(pacman -Q | cut -f 1 -d " ")
-# echo $pkgs > ~/.package.list.${COMPUTERID}
+echo $pkgs > ~/.package.list.${COMPUTERID}
 echo "ID: ${COMPUTERID}"
 
 # If not running interactively, don't do anything
