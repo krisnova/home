@@ -14,9 +14,9 @@
 #                                                                             #
 # =========================================================================== #
 
-if [ -z "$NOVIX_WORKSPACE" ]; then
-      echo "Missing NOVIX_WORKSPACE variable!"
-      echo "Ensure NOVIX_WORKSPACE is set to top level of repository"
+if [ -z "$HOME" ]; then
+      echo "Missing HOME variable!"
+      echo "Ensure HOME is set to top level of repository"
       echo "See 'make help' for more information to run 'make install'"
       exit 1
 fi

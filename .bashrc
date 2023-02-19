@@ -22,7 +22,7 @@
 # -------------------------
 # [ENVIRONMENTAL VARIABLES]
 # -------------------------
-export NOVIX_WORKSPACE="${HOME}/workspace"
+export HOME="${HOME}/workspace"
 export LD_LIBRARY_PATH=/usr/local/lib
 export GO111MODULE=on
 export PATH=$PATH:${HOME}/bin:${HOME}/workspace/bin

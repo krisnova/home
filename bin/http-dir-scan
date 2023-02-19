@@ -13,7 +13,7 @@
 #                        This machine kills fascists.                         #
 #                                                                             #
 # =========================================================================== #
-. $NOVIX_WORKSPACE/lib/_common
+. $HOME/lib/_common
 function help() {
     echo ""
     echo "===================================================================="

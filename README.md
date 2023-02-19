@@ -1,24 +1,71 @@
-# My Hacker and Research Workspace
+# Novix
 
-An Arch Linux based workspace for penetration testing, load testing, OSINT, network scanning, and more.
+"Novix" is the name of a small set of bash scripts that make up my Arch Linux toolkit.
 
-### Setting Up
+Think of it like my own personal flavor of Arch. It is safe for anyone to run, however
+I offer no support for this. Consider it subject to change or be destroyed at any time.
 
-Checkout the repository and set the `NOVIX_WORKSPACE` environment variable which is automatically managed by running `make install`.
+Use at your own risk!
 
-Run the `Makefile` for help installing the defaults.
+### High Level
 
-Use the files in `bin` to do things for the workspace. Note: this is a different bin than what is provisioned with `novix`!
+ - A `novix` user with privileged access to the system.
+ - All the tools I use while hacking installed.
+ - My own personal wrappers for many of the tools. 
 
-### Provision Novix Remote
 
-The `novix` provision scripts are my way of quickly bootstrapping a fresh Arch Linux image with all of my magic. 
+### Install Local
 
-If you intend to make changes to the base install please see the following script:
+##### 1. Check out the source code. Don't worry about where, it will figure itself out later.
 
-``` 
-$NOVIX_WORKSPACE/home/novix/bin/novix-packages
+```bash 
+cd /usr/local/src
+git clone git@github.com:krisnova/home.git
+cd home
 ```
+
+##### 2. Run the installer locally. It will manage the rest.
+
+```bash 
+sudo -E make install
+```
+
+Note that the installer makes a fair number of assumptions, as it will attempt to take over your entire Arch linux setup. 
+
+ - It assumes you intend to use `yay` to manage your AUR packages.
+ - It assumes you are running as privilege root user.
+ - It assumes you are okay with updating **your entire** system. (You should be!)
+ - It assumes you are okay with running the latest kernel.
+
+### Install remote
+
+We love "novix" so much we can spawn more "novix" installations from a base one. 
+
+If you happen to be in a situation where you have a remote Arch linux server online, and you want a quick and easy way to "move in" to the server you can remote provision a novix box.
+
+```bash
+# Assuming you are logged in as "novix" locally and have root@ssh access remotely.
+${HOME}/bin/novix-install-remote 10.0.0.230
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Well Known Locations
 
 ```bash

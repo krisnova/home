@@ -37,3 +37,4 @@ fi
 
 ## Step 2.
 # Provision packages.
+. lib/_novix_packages

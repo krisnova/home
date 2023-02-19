@@ -13,7 +13,7 @@
 #                        This machine kills fascists.                         #
 #                                                                             #
 # =========================================================================== #
-. $NOVIX_WORKSPACE/lib/_common
+. $HOME/lib/_common
 function help() {
     echo ""
     echo "===================================================================="
@@ -37,7 +37,7 @@ if [ "$1" = "-h" ]; then help; fi
 
 # Set variables
 REMOTE=$1
-DIR=$NOVIX_WORKSPACE/out/${REMOTE}.download/
+DIR=$HOME/out/${REMOTE}.download/
 
 echo "Scraping, downloading all files, and extracting: ${REMOTE}..."
 mkdir ${DIR}

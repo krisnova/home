@@ -45,7 +45,6 @@ yes | yay -Sy --noconfirm gobuster # Brute Force
 yes | yay -Sy --noconfirm seclists # Security Lists
 yes | yay -Sy --noconfirm nmap ssh sudo # Keep up to date
 
-
 # Kryptid for Kubernetes
 echo "  -> Installing kryptid..."
 cd /home/novix

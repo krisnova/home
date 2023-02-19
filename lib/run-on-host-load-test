@@ -14,7 +14,7 @@
 #                                                                             #
 # =========================================================================== #
 #
-# This script will be ran on every host configured in $NOVIX_WORKSPACE/remotes
+# This script will be ran on every host configured in $HOME/remotes
 #
 # Any commands in this file will be executed almost at exactly the same time.
 # The only limitation in execution drift is network connectivity and a single

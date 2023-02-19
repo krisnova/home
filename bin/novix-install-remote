@@ -13,15 +13,15 @@
 #                        This machine kills fascists.                         #
 #                                                                             #
 # =========================================================================== #
-. $NOVIX_WORKSPACE/lib/_common
+. $HOME/lib/_common
 function help() {
     echo ""
     echo "===================================================================="
     echo " Used for installing the 'novix' config to a remote host."
     echo ""
-    echo " [Usage]:  novix-install-remote <remote> <hostname>"
+    echo " [Usage]:  novix-install-remote <remote>"
     echo ""
-    echo "      Ex:  novix-install-remote 10.0.0.1 alice"
+    echo "      Ex:  novix-install-remote 10.0.0.1"
     echo ""
     echo "===================================================================="
     echo ""
@@ -35,14 +35,7 @@ if [ "$1" = "--help" ]; then help; fi
 if [ "$1" = "-h" ]; then help; fi
 
 REMOTE=$1
-HOSTNAME=$2
 USER=root
-
-# Configure the hostname for the remote "etc" directory
-echo $HOSTNAME > $NOVIX_WORKSPACE/etc/hostname
-
-# Send the configuration to the remote
-$NOVIX_WORKSPACE/bin/novix-configure-remote $REMOTE
 
 # Launch the novix installer on the remote
 echo "Begin ssh/scp install -> [$USER@$remote]..."

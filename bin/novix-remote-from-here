@@ -13,16 +13,15 @@
 #                        This machine kills fascists.                         #
 #                                                                             #
 # =========================================================================== #
-. $NOVIX_WORKSPACE/lib/_common
+. $HOME/lib/_common
 function help() {
     echo ""
     echo "===================================================================="
-    echo " Used for installing the 'novix' config to this local host."
+    echo " Used for 'spawning' this local copy of novix to a remote.          "
     echo ""
-    echo " WARNING: This will write over all local config!"
-    echo " WARNING: This will reset all local changes to your .bashrc"
+    echo " [Usage]:  novix-remote-from-here <root@remote>"
     echo ""
-    echo " [Usage]:  novix-install-local <hostname>"
+    echo "      Ex:  novix-remote-from-here root@novix.nivenly.com"
     echo ""
     echo "===================================================================="
     echo ""
@@ -34,20 +33,11 @@ if [ -z "$1" ]; then help; fi
 if [ "$1" = "help" ]; then help; fi
 if [ "$1" = "--help" ]; then help; fi
 if [ "$1" = "-h" ]; then help; fi
-if [ "$UID" != "0" ]; then echo '**Must be ran as root user with privileges!**'; exit; fi
 
-HOSTNAME=$1
+REMOTE=$1
 
-# Configure the hostname for the remote "etc" directory
-echo $HOSTNAME > $NOVIX_WORKSPACE/etc/hostname
+echo "Begin ssh/scp install -> [$REMOTE]..."
+scp -rv /home/novix/* $REMOTE:/home/novix
 
-# Send the configuration to the remote
-$NOVIX_WORKSPACE/bin/novix-configure-local
-
-echo "Begin local install"
-hostname $(cat /etc/hostname)
-hostnamectl hostname $(cat /etc/hostname)
-
-# Note: Here we install as the local user, so we do NOT run the "novix" script
-# Note: We only install the "novix-packages" script
-#/home/novix/bin/novix-packages
+# Launch the novix installer on the remote
+ssh $REMOTE "touch /var/log/novix.log && cd /home/novix && sudo -E make install 2> /var/log/novix.log &"

@@ -13,13 +13,13 @@
 #                        This machine kills fascists.                         #
 #                                                                             #
 # =========================================================================== #
-. $NOVIX_WORKSPACE/lib/_common
+. $HOME/lib/_common
 function help() {
     echo ""
     echo "===================================================================="
-    echo " Have an IP in mind? Want to get up to no good? Start here.         "
+    echo " Have an IP or hostname in mind? Up to no good?                     "
     echo ""
-    echo " [Usage]:  boop <target>                                            "
+    echo " [Usage]:  boop <remote>                                            "
     echo ""
     echo "      Ex:  boop twitter.com                                         "
     echo ""
@@ -37,12 +37,12 @@ REMOTE=$1
 DATE=$(date '+%Y-%m-%d')
 
 # Curl just to get a feel for things
-curl --silent -o /dev/null -S -L -v $REMOTE > $NOVIX_WORKSPACE/out/$REMOTE-$DATE-curl.headers 2>&1 &
+curl --silent -o /dev/null -S -L -v $REMOTE > $HOME/out/$REMOTE-$DATE-curl.headers 2>&1 &
 curl --silent -o /dev/null -S -L -v $REMOTE
-curl --silent -S -L -v $REMOTE > $NOVIX_WORKSPACE/out/$REMOTE-$DATE-curl.body 2>&1 &
+curl --silent -S -L -v $REMOTE > $HOME/out/$REMOTE-$DATE-curl.body 2>&1 &
 
 # Now kick off all the fun nmap scans for good measure
-$NOVIX_WORKSPACE/bin/nmap-nova $REMOTE
+$HOME/bin/nmap-nova $REMOTE
 nmap -p0- -v -A -T4 $REMOTE & # Should be quick and will just write to stdout!
 
 

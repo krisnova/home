@@ -13,7 +13,7 @@
 #                        This machine kills fascists.                         #
 #                                                                             #
 # =========================================================================== #
-. $NOVIX_WORKSPACE/lib/_common && set -e
+. $HOME/lib/_common && set -e
 function help() {
     echo ""
     echo "===================================================================="
@@ -53,20 +53,20 @@ if [ "$1" != "--now" ]; then help; fi
 
 echo "Initializing load test..."
 date=$(date +"%Y-%m-%d_%H%M%S")
-log=$NOVIX_WORKSPACE/out/$date-load-test.log
+log=$HOME/out/$date-load-test.log
 echo "Initializing load-test..." > $log
 echo "Writing stdout and stderr to $log"
 
 function single_host() {
   HOST=$1
   ID=$(uuidgen)
-  scp $NOVIX_WORKSPACE/lib/run-on-host-load-test $HOST:/tmp/$ID >> $log 2>&1
+  scp $HOME/lib/run-on-host-load-test $HOST:/tmp/$ID >> $log 2>&1
   ssh $HOST /tmp/$ID >> $log 2>&1
   ssh $HOST rm -rf /tmp/$ID >> $log 2>&1
 }
 
 # Check the hosts
-u=$(cat $NOVIX_WORKSPACE/remotes | uniq)
+u=$(cat $HOME/remotes | uniq)
 for HOST in $u; do
   echo "  -> Checking connection to host: $HOST"
   ssh $HOST echo '  -> Connected!' || exit 1
@@ -76,6 +76,6 @@ done
 while read HOST; do
   echo "  -> Spawning work $HOST"
   single_host $HOST &
-done <$NOVIX_WORKSPACE/remotes
+done <$HOME/remotes
 
 echo "Spawned background jobs against each host in hosts file!"
