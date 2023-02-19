@@ -1,4 +1,16 @@
-out/*
 .idea*
 remotes
 *flag*
+.*
+
+
+## Linux Ignore
+Documents/*
+Downloads/*
+Pictures/*
+Videos/*
+Screenshots/*
+
+## Novix garbage
+src/*
+out/*
