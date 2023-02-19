@@ -24,13 +24,6 @@
 # source intelligence purposes.
 #
 # Requires "vulscan" to scan for vulnerabilities
-#
-# pacaur -S vulscan-git
-#
-# -O    Enables OS detectionA
-# -sV   Enables version detection
-# -sS   TCP SYN/Connect()/ACK/Window/Maimon scans
-# --script=vulscan Enables vulscan script
 
 DATE=$(date '+%Y-%m-%d')
 
@@ -42,20 +35,39 @@ DATE=$(date '+%Y-%m-%d')
 #     NMAP_COMMON="nmap -6" ./_nmap
 NMAP_COMMON="${NMAP_COMMON:-nmap}"
 
-TARGET=$@ # Pass all arguments for good measure
-REMOTE=$1 # Remote is the target hostname
+TARGET=$@ # Target is the full nmap target, host, and other flags
+REMOTE=$1 # Remote is the remote host only
+
+# Kill any previous running scans in the background
+sudo -E pkill -f nmap
+
+## Surface glance (ping scan only) to stdout
+# -n  Never do DNS resolution
+# -sn Ping Scan - disable port scan
 echo ""
-echo "Running: $NMAP_COMMON"
+echo "---[ Surface Scan ]------------------------------------------------------------------"
+sudo -E $NMAP_COMMON -n -sn $TARGET
+echo "---[ Surface Scan ]------------------------------------------------------------------"
 echo ""
 
-# Basic Port Scan
+echo "---[ Full Scans ]--------------------------------------------------------------------"
+## Fast scan, just the basics:
+# -A   Enable OS detection, version detection, script scanning, and traceroute
+# -sC  Default script
+# -sV  Probe open ports and determine service version
 echo "  -> Nmap: Starting Basic Port Scan..."
-sudo -E $NMAP_COMMON -sC -sV $TARGET > $HOME/out/$REMOTE-$DATE.nmap.ports 2>&1 &                          # Quick
-sudo -E $NMAP_COMMON -sC -sV -p- -v -A --min-rate 5000 $TARGET > $HOME/out/$REMOTE-$DATE.nmap.all.ports 2>&1 &  # Slow (all ports)
+sudo -E $NMAP_COMMON -sC -sV -A $TARGET > $HOME/out/$REMOTE-$DATE.nmap.ports 2>&1 &                                # Quick
 
-# Operating System Scan
-echo "  -> Nmap: Starting Operating System Scan..."
-sudo -E $NMAP_COMMON -O $TARGET > $HOME/out/$REMOTE-$DATE.nmap.osscan 2>&1 &
+## [ Full scan ]
+# -O   Operating system
+# -sC  Default script
+# -sV  Probe open ports and determine service version
+# -p-  Probe all ports (Note: '-p' is port ranges)
+# -v   Increase verbosity level
+# -A   Enable OS detection, version detection, script scanning, and traceroute
+#
+# --min-rate  Send packets no slower than <number> per second
+sudo -E $NMAP_COMMON -sC -sV -p- -v -A --min-rate 5000 $TARGET > $HOME/out/$REMOTE-$DATE.nmap.all.ports 2>&1 &  # Slow (all ports)
 
 # Basic HTTP Scan
 echo "  -> Nmap: Starting Basic HTTP Scan..."
@@ -64,8 +76,9 @@ sudo -E $NMAP_COMMON --script=http-headers $TARGET > $HOME/out/$REMOTE-$DATE.nma
 # Vulnerability (CVE) Scan
 echo "  -> Nmap: Starting CVE Scan..."
 sudo -E $NMAP_COMMON -sV -sS --script=vulscan/vulscan.nse $TARGET > $HOME/out/$REMOTE-$DATE.nmap.cve 2>&1 &
+echo "---[ Full Scans ]--------------------------------------------------------------------"
 
 echo ""
 echo "Scripts will finish in the background."
-echo "See $HOME/out/*nmap* files for results"
+echo "See $HOME/out/*$REMOTE* files for results"
 echo ""

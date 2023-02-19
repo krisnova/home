@@ -43,6 +43,4 @@ curl --silent -S -L -v $REMOTE > $HOME/out/$REMOTE-$DATE-curl.body 2>&1 &
 
 # Now kick off all the fun nmap scans for good measure
 $HOME/bin/nmap-nova $REMOTE
-nmap -p0- -v -A -T4 $REMOTE & # Should be quick and will just write to stdout!
-
 
