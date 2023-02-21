@@ -18,7 +18,7 @@ echo "  -> Purging /home/novix/src"
 rm -rvf /home/novix/src
 
 # Quickly sync base packages and update the remotes
-yes | pacman -S --noconfirm archlinux-keyring 
+yes | pacman -S --noconfirm archlinux-keyring
 pacman --overwrite "*" -Ssy
 pacman --overwrite "*" -Syu
 
@@ -44,7 +44,8 @@ yes | yay -Sy --noconfirm hydra # Crackers
 yes | yay -Sy --noconfirm gobuster ldns amass # Enumeration
 yes | yay -Sy --noconfirm seclists # Security Lists
 yes | yay -Sy --noconfirm nmap ssh sudo # Keep up to date
-yes | yay -Sy --noconfirm aws-cli # Cloud
+yes | yay -Sy --noconfirm aws-cli # Cloudy
+yes | yay -Sy --noconfirm ruby-evil-winrm # Windows
 
 # Kryptid for Kubernetes
 echo "  -> Installing kryptid..."
