@@ -1,4 +1,10 @@
-version: "3.9"
+name: novix
 services:
   novix:
-    build: .
+    build:
+      dockerfile: .devcontainer/Dockerfile
+    networks:
+      default: null
+networks:
+  default:
+    name: devcontainer_default
