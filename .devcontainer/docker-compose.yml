@@ -2,5 +2,3 @@ version: "3.9"
 services:
   novix:
     build: .
-    ports:
-      - "8080:8080"
