@@ -55,7 +55,7 @@ echo "---[ Full Scans ]---------------------------------------------------------
 # -sC  Default script
 # -sV  Probe open ports and determine service version
 echo "  -> Nmap: Starting Basic Port Scan..."
-sudo -E LABEL=nmapworker $NMAP_COMMON -sC -sV -A $TARGET > $HOME/out/$REMOTE-$DATE.nmap.ports 2>&1 &                                # Quick
+sudo -E LABEL=nmapworker $NMAP_COMMON -sC -sV -A $TARGET > $HOME/out/$REMOTE-$DATE.nmap.ports 2>&1 &
 
 ## [ Full scan ]
 # -O   Operating system
@@ -66,7 +66,13 @@ sudo -E LABEL=nmapworker $NMAP_COMMON -sC -sV -A $TARGET > $HOME/out/$REMOTE-$DA
 # -A   Enable OS detection, version detection, script scanning, and traceroute
 #
 # --min-rate  Send packets no slower than <number> per second
-sudo -E LABEL=nmapworker $NMAP_COMMON -sC -sV -p- -v -A --min-rate 5000 $TARGET > $HOME/out/$REMOTE-$DATE.nmap.all.ports 2>&1 &  # Slow (all ports)
+sudo -E LABEL=nmapworker $NMAP_COMMON -sC -sV -p- -v -A --min-rate 5000 $TARGET > $HOME/out/$REMOTE-$DATE.nmap.all.ports 2>&1 &
+
+## [ Windows scan ]
+#
+# -Pn  No Ping
+sudo -E LABEL=nmapworker $NMAP_COMMON -sC -sV -Pn $TARGET > $HOME/out/$REMOTE-$DATE.nmap.ping.ports 2>&1 &
+
 
 # Basic HTTP Scan
 echo "  -> Nmap: Starting Basic HTTP Scan..."
@@ -74,7 +80,7 @@ sudo -E LABEL=nmapworker $NMAP_COMMON --script=http-headers $TARGET > $HOME/out/
 
 # Vulnerability (CVE) Scan
 echo "  -> Nmap: Starting CVE Scan..."
-sudo -E LABEL=nmapworker $NMAP_COMMON -sV -sS --script=vulscan/vulscan.nse $TARGET > $HOME/out/$REMOTE-$DATE.nmap.cve 2>&1 &
+sudo -E LABEL=nmapworker $NMAP_COMMON -sV --script=vulscan/vulscan.nse $TARGET > $HOME/out/$REMOTE-$DATE.nmap.cve 2>&1 &
 echo "---[ Full Scans ]--------------------------------------------------------------------"
 
 echo ""

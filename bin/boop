@@ -13,7 +13,6 @@
 #                        This machine kills fascists.                         #
 #                                                                             #
 # =========================================================================== #
-. $HOME/lib/_common
 function help() {
     echo ""
     echo "===================================================================="
@@ -38,7 +37,7 @@ DATE=$(date '+%Y-%m-%d')
 
 # Curl just to get a feel for things
 curl --silent -o /dev/null -S -L -v $REMOTE > $HOME/out/$REMOTE-$DATE-curl.headers 2>&1 &
-curl --silent -o /dev/null -S -L -v $REMOTE
+curl --silent -o /dev/null -S -L -v $REMOTE &
 curl --silent -S -L -v $REMOTE > $HOME/out/$REMOTE-$DATE-curl.body 2>&1 &
 
 # Now kick off all the fun nmap scans for good measure
