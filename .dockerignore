@@ -5,6 +5,6 @@ Downloads
 Pictures
 src
 GitHub
+.*
 !.bash_profile
 !.bashrc
-.*

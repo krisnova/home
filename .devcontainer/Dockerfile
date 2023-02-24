@@ -1,2 +1,2 @@
 FROM krisnova/home:latest
-WORKDIR /home/novix
+WORKDIR /root
