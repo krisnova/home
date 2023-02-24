@@ -16,6 +16,8 @@
 CONTAINER       = krisnova/home
 CONTAINER_TAG   = latest
 CONTAINER_SHA   = $(shell git rev-parse --short HEAD)
+CPU_SET         = $(shell cat /proc/1/status | grep -i cpus_allowed_list | cut -d ":" -f 2 | sed 's/\t//g')
+
 default: help
 
 install: ## Install "Novix" on the local workstation. 
@@ -24,11 +26,11 @@ install: ## Install "Novix" on the local workstation.
 
 container: ## Build the Dockerfile
 	@echo "Building Dockerfile"
-	sudo -E docker build -t ${CONTAINER}:${CONTAINER_TAG} -f Dockerfile .
-	sudo -E docker build -t ${CONTAINER}:${CONTAINER_SHA} -f Dockerfile .
+	sudo -E docker build --cpuset-cpus="${CPU_SET}" -t ${CONTAINER}:${CONTAINER_TAG} -f Dockerfile .
+	sudo -E docker tag ${CONTAINER}:${CONTAINER_TAG} ${CONTAINER}:${CONTAINER_SHA}
 
 dev: ## Run a development copy of Novix in a container
-	sudo -E docker run -it ${CONTAINER}:${CONTAINER_TAG} /bin/bash
+	sudo -E docker run --hostname=novix -it ${CONTAINER}:${CONTAINER_TAG} /bin/bash
 
 push: ## Push the container image to dockerhub
 	sudo -E docker push ${CONTAINER}:${CONTAINER_TAG}

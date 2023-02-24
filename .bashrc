@@ -68,9 +68,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # -------------------------
 # [COMPUTER]
 # -------------------------
-COMPUTERID=$(cat /proc/config.gz | shasum | cut -d " " -f 1)
-pkgs=$(pacman -Q | cut -f 1 -d " ")
-echo "ID: ${COMPUTERID}"
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return

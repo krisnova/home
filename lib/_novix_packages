@@ -39,13 +39,13 @@ cd yay_${YAY_VERSION}_x86_64
 cp -v yay /bin/yay
 
 # Hacking Tools
-yes | yay -Sy --noconfirm nmap zmap netcat stunnel hping netdiscover instaloader vulscan-git # Network
-yes | yay -Sy --noconfirm john hydra # Crackers
-yes | yay -Sy --noconfirm gobuster ldns amass # Enumeration
-yes | yay -Sy --noconfirm seclists # Security Lists
-yes | yay -Sy --noconfirm nmap ssh sudo cuda # Keep up to date
-yes | yay -Sy --noconfirm aws-cli # Cloudy
-yes | yay -Sy --noconfirm ruby-evil-winrm responder impacket # Windows
+yes | yay -S --noconfirm nmap zmap netcat stunnel hping netdiscover instaloader vulscan-git # Network
+yes | yay -S --noconfirm john hydra # Crackers
+yes | yay -S --noconfirm gobuster ldns amass # Enumeration
+yes | yay -S --noconfirm seclists # Security Lists
+yes | yay -S --noconfirm nmap ssh sudo cuda # Keep up to date
+yes | yay -S --noconfirm aws-cli # Cloudy
+yes | yay -S --noconfirm ruby-evil-winrm responder impacket # Windows
 
 # Kryptid for Kubernetes
 echo "  -> Installing kryptid..."
