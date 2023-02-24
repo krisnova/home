@@ -1,0 +1,52 @@
+#!/bin/bash
+# =========================================================================== #
+#                                                                             #
+#                 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓                 #
+#                 ┃   ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗   ┃                 #
+#                 ┃   ████╗  ██║██╔═████╗██║   ██║██╔══██╗  ┃                 #
+#                 ┃   ██╔██╗ ██║██║██╔██║██║   ██║███████║  ┃                 #
+#                 ┃   ██║╚██╗██║████╔╝██║╚██╗ ██╔╝██╔══██║  ┃                 #
+#                 ┃   ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║  ┃                 #
+#                 ┃   ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝  ┃                 #
+#                 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛                 #
+#                                                                             #
+#                        This machine kills fascists.                         #
+#                                                                             #
+# =========================================================================== #
+
+echo "  -> Purging /root/src"
+rm -rvf /root/src
+
+# Quickly sync base packages and update the remotes
+pacman --overwrite "*" -Ssy
+pacman --overwrite "*" -Syu
+pacman-key --init
+yes | pacman -S --noconfirm archlinux-keyring
+
+
+# Core packages
+yes | pacman -S --noconfirm base-devel clang # Compiler tools
+yes | pacman -S --noconfirm screen rsync wget git neofetch # Utilities
+yes | pacman -S --noconfirm emacs # Editors
+#yes | pacman -S --noconfirm nginx  # Servers
+#yes | pacman -S --noconfirm go  # Languages
+
+# Yay for AUR packages
+mkdir /root/src
+cd /root/src
+YAY_VERSION="11.1.2"
+wget https://github.com/Jguer/yay/releases/download/v11.1.2/yay_${YAY_VERSION}_x86_64.tar.gz
+tar -xzf yay_${YAY_VERSION}_x86_64.tar.gz
+cd yay_${YAY_VERSION}_x86_64
+cp -v yay /bin/yay
+
+# Hacking Tools
+yes | yay -S --noconfirm nmap zmap netcat stunnel hping netdiscover instaloader vulscan-git # Network
+yes | yay -S --noconfirm john hydra # Crackers
+yes | yay -S --noconfirm gobuster ldns amass # Enumeration
+yes | yay -S --noconfirm seclists # Security Lists
+yes | yay -S --noconfirm ssh # Keep up to date
+#yes | yay -S --noconfirm aws-cli # Cloudy
+#yes | yay -S --noconfirm ruby-evil-winrm responder impacket #
+
+exit 0
