@@ -1,4 +1,2 @@
-FROM archlinux:base 
-
+FROM krisnova/home:latest
 WORKDIR /home/novix
-

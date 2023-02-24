@@ -1,3 +1,4 @@
+#!/bin/bash
 # =========================================================================== #
 #                                                                             #
 #                 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓                 #
@@ -12,33 +13,25 @@
 #                        This machine kills fascists.                         #
 #                                                                             #
 # =========================================================================== #
+function help() {
+    echo ""
+    echo "===================================================================="
+    echo " Host a payload which can be include in other ways.                 "
+    echo ""
+    echo " [Usage]:  hostme <file>                                            "
+    echo ""
+    echo "===================================================================="
+    echo ""
+    exit
+}
 
-CONTAINER       = krisnova/home
-CONTAINER_TAG   = latest
-CONTAINER_SHA   = $(shell git rev-parse --short HEAD)
-default: help
-
-install: ## Install "Novix" on the local workstation. 
-	@echo "Installing..."
-	. lib/_install
-
-container: ## Build the Dockerfile
-	@echo "Building Dockerfile"
-	sudo -E docker build -t ${CONTAINER}:${CONTAINER_TAG} -f Dockerfile .
-	sudo -E docker build -t ${CONTAINER}:${CONTAINER_SHA} -f Dockerfile .
-
-dev: ## Run a development copy of Novix in a container
-	sudo -E docker run -it ${CONTAINER}:${CONTAINER_TAG} /bin/bash
-
-push: ## Push the container image to dockerhub
-	sudo -E docker push ${CONTAINER}:${CONTAINER_TAG}
-	sudo -E docker push ${CONTAINER}:${CONTAINER_SHA}
-
-clean: ## Clean your artifacts 🧼
-	@echo "Cleaning..."
-	rm -rvf out/*
-	rm -rvf *flag*
-
-.PHONY: help
-help:  ## 🤔 Show help messages for make targets
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}'
+# Usage and help
+if [ -z "$1" ]; then help; fi
+if [ "$1" = "help" ]; then help; fi
+if [ "$1" = "--help" ]; then help; fi
+if [ "$1" = "-h" ]; then help; fi
+FILE=$1
+PORT=9075
+DIR=$(dirname $FILE)
+echo "Hosting files from: $DIR on port: $PORT..."
+python -m http.server $PORT
