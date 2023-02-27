@@ -28,6 +28,7 @@ yes | pacman -S --noconfirm archlinux-keyring
 yes | pacman -S --noconfirm base-devel clang # Compiler tools
 yes | pacman -S --noconfirm screen rsync wget git neofetch # Utilities
 yes | pacman -S --noconfirm emacs # Editors
+yes | pacman -S --noconfirm tmate # Terminal
 #yes | pacman -S --noconfirm nginx  # Servers
 #yes | pacman -S --noconfirm go  # Languages
 
@@ -41,11 +42,11 @@ cd yay_${YAY_VERSION}_x86_64
 cp -v yay /bin/yay
 
 # Hacking Tools
-yes | yay -S --noconfirm nmap zmap netcat stunnel hping netdiscover instaloader vulscan-git # Network
+yes | yay -S --noconfirm arp-scan nmap zmap netcat stunnel hping netdiscover instaloader vulscan-git # Network
 yes | yay -S --noconfirm john hydra # Crackers
 yes | yay -S --noconfirm gobuster ldns amass # Enumeration
 yes | yay -S --noconfirm seclists # Security Lists
-yes | yay -S --noconfirm ssh # Keep up to date
+yes | yay -S --noconfirm tree openssh inetutils # Keep up to date
 #yes | yay -S --noconfirm aws-cli # Cloudy
 #yes | yay -S --noconfirm ruby-evil-winrm responder impacket #
 
