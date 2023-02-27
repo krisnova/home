@@ -1,0 +1,47 @@
+#!/bin/bash
+# =========================================================================== #
+#                                                                             #
+#                 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓                 #
+#                 ┃   ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗   ┃                 #
+#                 ┃   ████╗  ██║██╔═████╗██║   ██║██╔══██╗  ┃                 #
+#                 ┃   ██╔██╗ ██║██║██╔██║██║   ██║███████║  ┃                 #
+#                 ┃   ██║╚██╗██║████╔╝██║╚██╗ ██╔╝██╔══██║  ┃                 #
+#                 ┃   ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║  ┃                 #
+#                 ┃   ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝  ┃                 #
+#                 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛                 #
+#                                                                             #
+#                        This machine kills fascists.                         #
+#                                                                             #
+# =========================================================================== #
+
+
+function help() {
+    echo ""
+    echo "===================================================================="
+    echo " Run an OCI container bundle with Youki."
+    echo ""
+    echo " [Usage]:  youki-run <path> <name>"
+    echo ""
+    echo "      Ex:  youki-run /var/run/aurae/bundles/busybox foo"
+    echo ""
+    echo "===================================================================="
+    echo ""
+    exit
+}
+
+# Usage and help
+if [ -z "$1" ]; then help; fi
+if [ "$1" = "help" ]; then help; fi
+if [ "$1" = "--help" ]; then help; fi
+if [ "$1" = "-h" ]; then help; fi
+if [ -z "$2" ]; then help; fi
+if [ "$2" = "help" ]; then help; fi
+if [ "$2" = "--help" ]; then help; fi
+if [ "$2" = "-h" ]; then help; fi
+
+P=$1
+N=$2
+
+sudo -E youki create -b ${P} ${N} # Create the container
+sudo -E youki state ${N}          # Show the container state
+sudo -E youki start ${N}          # Start the container
