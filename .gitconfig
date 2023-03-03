@@ -1,4 +1,5 @@
-[user]
-	name = Kris Nóva
-	email = nova@nivenly.org
-	username = kris-nova
+
+[includeIf "gitdir:~/"]
+  path = ~/.gitconfig.nivenly
+[includeIf "gitdir:~/GitHub/"]
+  path = ~/.gitconfig.github
