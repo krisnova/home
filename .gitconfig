@@ -1,5 +1,11 @@
 
+# Core Configuration
+[core]
+  excludesfile = /home/novix/.gitignore
+
+# Define directory breakouts
 [includeIf "gitdir:~/"]
   path = ~/.gitconfig.nivenly
 [includeIf "gitdir:~/GitHub/"]
   path = ~/.gitconfig.github
+
