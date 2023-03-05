@@ -73,6 +73,9 @@ sudo -E LABEL=nmapworker $NMAP_COMMON -sC -sV -p- -v -A --min-rate 5000 $TARGET 
 # -Pn  No Ping
 sudo -E LABEL=nmapworker $NMAP_COMMON -sC -sV -Pn $TARGET > $HOME/out/$REMOTE-$DATE.nmap.ping.ports 2>&1 &
 
+## UDP
+#
+sudo -E LABEL=nmapworker $NMAP_COMMON -n -sU -p- --max-retries 1 $TARGET > $HOME/out/$REMOTE-$DATE.nmap.udp.ports 2>&1 &
 
 # Basic HTTP Scan
 echo "  -> Nmap: Starting Basic HTTP Scan..."

@@ -40,6 +40,7 @@ clean: ## Clean your artifacts 🧼
 	@echo "Cleaning..."
 	rm -rvf out/*
 	rm -rvf *flag*
+	rm -rvf tmp/*
 
 .PHONY: help
 help:  ## 🤔 Show help messages for make targets
