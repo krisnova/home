@@ -48,7 +48,7 @@ curl --silent -S -L -v $REMOTE > $HOME/out/$REMOTE-$DATE-curl.body 2>&1 &
 
 # Lets find some quick directories
 echo " --> Boop: dirs"
-gobuster \
+gobuster dir \
   -u $REMOTE \
   -w /usr/share/seclists/Discovery/Web-Content/raft-small-directories-lowercase.txt > $HOME/out/$REMOTE-$DATE-gobuster.small.quick 2>&1 &
 
