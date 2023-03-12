@@ -1,7 +1,7 @@
 
 # Core Configuration
 [core]
-  excludesfile = /home/novix/.gitignore
+  excludesfile = /home/novix/.git.excludes
 
 # Define directory breakouts
 [includeIf "gitdir:~/"]
@@ -9,3 +9,5 @@
 [includeIf "gitdir:~/GitHub/"]
   path = ~/.gitconfig.github
 
+[init]
+	defaultBranch = main
