@@ -1,17 +1,41 @@
-[core]
-  excludesfile = /home/novix/.git.excludes
-
-# Define directory breakouts
-[includeIf "gitdir:~/"]
-	path = ~/.gitconfig.nivenly
+# =========================================================================== #
+#                                                                             #
+#                 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓                 #
+#                 ┃   ███╗   ██╗ ██████╗ ██╗   ██╗ █████╗   ┃                 #
+#                 ┃   ████╗  ██║██╔═████╗██║   ██║██╔══██╗  ┃                 #
+#                 ┃   ██╔██╗ ██║██║██╔██║██║   ██║███████║  ┃                 #
+#                 ┃   ██║╚██╗██║████╔╝██║╚██╗ ██╔╝██╔══██║  ┃                 #
+#                 ┃   ██║ ╚████║╚██████╔╝ ╚████╔╝ ██║  ██║  ┃                 #
+#                 ┃   ╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚═╝  ╚═╝  ┃                 #
+#                 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛                 #
+#                                                                             #
+#                        This machine kills fascists.                         #
+#                                                                             #
+# =========================================================================== #
 
 [init]
 	defaultBranch = main
 
-[includeIf "gitdir:~/GitHub/"]
-	path = ~/.gitconfig.github
+[core]
+  excludesfile = /home/novix/.git.excludes
+  editor = 'emacs -nw'
 
 [commit]
 	gpgsign = true
 [gpg]
 	program = gpg
+
+[includeIf "gitdir:~/"]
+	path = ~/.gitconfig.nivenly
+
+[includeIf "gitdir:~/GitHub/"]
+	path = ~/.gitconfig.github
+
+[alias]
+    aa = add --all
+    tree = log --graph --decorate --pretty=oneline --abbrev-commit
+    br = branch -vv
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+    ld = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short --graph
+    ls = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+
