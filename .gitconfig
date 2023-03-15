@@ -1,13 +1,17 @@
-
-# Core Configuration
 [core]
   excludesfile = /home/novix/.git.excludes
 
 # Define directory breakouts
 [includeIf "gitdir:~/"]
-  path = ~/.gitconfig.nivenly
-[includeIf "gitdir:~/GitHub/"]
-  path = ~/.gitconfig.github
+	path = ~/.gitconfig.nivenly
 
 [init]
 	defaultBranch = main
+
+[includeIf "gitdir:~/GitHub/"]
+	path = ~/.gitconfig.github
+
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg
