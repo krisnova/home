@@ -29,6 +29,7 @@ export PATH=$PATH:${HOME}/bin:/var/lib/mastodon/bin:${HOME}/.cargo/bin
 export EDITOR=emacs
 export RAILS_ENV=production
 export GPG_TTY=$(tty)
+export PKG_CONFIG_SYSROOT_DIR=/
 
 # -------------------------
 # [ALIAS]
